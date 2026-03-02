@@ -37,5 +37,11 @@ const api = {
         electron_1.ipcRenderer.on('from-island', (_e, data) => cb(data));
         return () => electron_1.ipcRenderer.removeAllListeners('from-island');
     },
+    onSystemMediaUpdate: (cb) => {
+        electron_1.ipcRenderer.on('system-media-update', (_e, data) => cb(data));
+        return () => electron_1.ipcRenderer.removeAllListeners('system-media-update');
+    },
+    setSystemVolume: (vol) => electron_1.ipcRenderer.invoke('set-volume', vol),
+    getSystemVolume: () => electron_1.ipcRenderer.invoke('get-volume'),
 };
 electron_1.contextBridge.exposeInMainWorld('electronAPI', api);

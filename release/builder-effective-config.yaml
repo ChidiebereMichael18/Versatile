@@ -1,0 +1,17 @@
+directories:
+  output: release
+  buildResources: build
+appId: com.dynamicisland.app
+productName: Dynamic Island
+files:
+  - filter:
+      - dist/**/*
+      - dist-electron/**/*
+mac:
+  category: public.app-category.utilities
+  target: dmg
+win:
+  target: nsis
+linux:
+  target: AppImage
+electronVersion: 33.4.11

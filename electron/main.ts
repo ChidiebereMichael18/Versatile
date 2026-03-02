@@ -159,7 +159,7 @@ function createSettingsWindow() {
 
   if (isDev) {
     settingsWin.loadURL(RENDERER_URL + '/#settings')
-    settingsWin.webContents.openDevTools({ mode: 'detach' })
+    // settingsWin.webContents.openDevTools({ mode: 'detach' })
   } else {
     settingsWin.loadFile(path.join(__dirname, '../dist/index.html'), {
       hash: 'settings',
@@ -179,7 +179,7 @@ function createTray() {
   const updateMenu = () => {
     const contextMenu = Menu.buildFromTemplate([
       {
-        label: '🏝  Dynamic Island',
+        label: 'Versatile',
         enabled: false,
       },
       { type: 'separator' },

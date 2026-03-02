@@ -38,7 +38,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const electron_1 = require("electron");
 const path = __importStar(require("path"));
-const media_watcher_1 = require("./media-watcher.cjs");
+const media_watcher_1 = require("./media-watcher");
 const fs = __importStar(require("fs"));
 const os = __importStar(require("os"));
 const electron_store_1 = __importDefault(require("electron-store"));
@@ -153,7 +153,7 @@ function createSettingsWindow() {
     const display = electron_1.screen.getPrimaryDisplay();
     const { width: sw, height: sh } = display.workAreaSize;
     settingsWin = new electron_1.BrowserWindow({
-        width: 720,
+        width: 820,
         height: 580,
         x: Math.floor(sw / 2 - 360),
         y: Math.floor(sh / 2 - 290),
@@ -171,7 +171,7 @@ function createSettingsWindow() {
     });
     if (isDev) {
         settingsWin.loadURL(RENDERER_URL + '/#settings');
-        settingsWin.webContents.openDevTools({ mode: 'detach' });
+        // settingsWin.webContents.openDevTools({ mode: 'detach' })
     }
     else {
         settingsWin.loadFile(path.join(__dirname, '../dist/index.html'), {
@@ -189,7 +189,7 @@ function createTray() {
     const updateMenu = () => {
         const contextMenu = electron_1.Menu.buildFromTemplate([
             {
-                label: '🏝  Dynamic Island',
+                label: 'Versatile',
                 enabled: false,
             },
             { type: 'separator' },
@@ -302,6 +302,20 @@ function setupIPC() {
             islandWin.webContents.send('settings-changed', store.store);
         }
         return true;
+    });
+    // Volume control (Windows)
+    electron_1.ipcMain.handle('set-volume', async (_e, vol) => {
+        const { exec } = require('child_process');
+        const pct = Math.round(vol * 100);
+        exec(`powershell -c "$obj = New-Object -ComObject WScript.Shell; for($i=0;$i -lt 50;$i++){$obj.SendKeys([char]174)}; for($i=0;$i -lt ${Math.round(pct / 2)};$i++){$obj.SendKeys([char]175)}"`);
+    });
+    electron_1.ipcMain.handle('get-volume', async () => {
+        return new Promise((resolve) => {
+            const { exec } = require('child_process');
+            exec(`powershell -c "[audio]::Volume"`, (_, stdout) => {
+                resolve(parseFloat(stdout.trim()) || 0.5);
+            });
+        });
     });
     // Open folder picker for music
     electron_1.ipcMain.handle('pick-music-folder', async () => {

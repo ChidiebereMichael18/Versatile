@@ -57,7 +57,7 @@ export function SettingsApp() {
 
   const sendTestNotification = () => {
     window.electronAPI?.triggerNotification({
-      icon: '🧪', app: 'Dynamic Island', message: 'Test notification is working!',
+      icon: '🧪', app: 'Versatile', message: 'Test notification is working!',
       color: 'rgba(108,99,255,0.2)', duration: 3000,
     })
     window.electronAPI?.closeSettings()
@@ -389,7 +389,7 @@ export function SettingsApp() {
               🏝
             </div>
             <div>
-              <h2 className="text-lg font-semibold text-white">Dynamic Island</h2>
+              <h2 className="text-lg font-semibold text-white">Versatile</h2>
               <p className="text-white/40 text-xs mt-1">Version 1.0.0</p>
             </div>
             <p className="text-white/35 text-xs max-w-xs leading-relaxed">
