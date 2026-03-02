@@ -140,7 +140,7 @@ function createSettingsWindow() {
   const { width: sw, height: sh } = display.workAreaSize
 
   settingsWin = new BrowserWindow({
-    width: 720,
+    width: 820,
     height: 580,
     x: Math.floor(sw / 2 - 360),
     y: Math.floor(sh / 2 - 290),
@@ -293,6 +293,22 @@ function setupIPC() {
 
     return true
   })
+
+  // Volume control (Windows)
+ipcMain.handle('set-volume', async (_e, vol: number) => {
+  const { exec } = require('child_process')
+  const pct = Math.round(vol * 100)
+  exec(`powershell -c "$obj = New-Object -ComObject WScript.Shell; for($i=0;$i -lt 50;$i++){$obj.SendKeys([char]174)}; for($i=0;$i -lt ${Math.round(pct/2)};$i++){$obj.SendKeys([char]175)}"`)
+})
+
+ipcMain.handle('get-volume', async () => {
+  return new Promise((resolve) => {
+    const { exec } = require('child_process')
+    exec(`powershell -c "[audio]::Volume"`, (_: any, stdout: string) => {
+      resolve(parseFloat(stdout.trim()) || 0.5)
+    })
+  })
+})
 
   // Open folder picker for music
   ipcMain.handle('pick-music-folder', async () => {

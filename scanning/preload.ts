@@ -44,6 +44,8 @@ const api = {
   ipcRenderer.on('system-media-update', (_e, data) => cb(data))
   return () => ipcRenderer.removeAllListeners('system-media-update')
 },
+setSystemVolume: (vol: number) => ipcRenderer.invoke('set-volume', vol),
+getSystemVolume: () => ipcRenderer.invoke('get-volume'),
 }
 
 contextBridge.exposeInMainWorld('electronAPI', api)

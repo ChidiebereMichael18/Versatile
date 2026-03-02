@@ -87,6 +87,8 @@ declare global {
       onFromSettings: (cb: (payload: unknown) => void) => () => void
       onFromIsland: (cb: (payload: unknown) => void) => () => void
     onSystemMediaUpdate: (cb: (data: any) => void) => () => void
+    setSystemVolume?: (vol: number) => Promise<void>
+   getSystemVolume?: () => Promise<number>
     }
   }
 }

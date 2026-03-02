@@ -97,12 +97,12 @@ export function SettingsApp() {
       </div>
 
       {/* Tabs */}
-      <div className="flex gap-1 px-5 pb-2" style={{ WebkitAppRegion: 'no-drag' } as React.CSSProperties}>
+      <div className="flex gap-1 px-5 overflow-x-auto pb-2" style={{ WebkitAppRegion: 'no-drag' } as React.CSSProperties}>
         {TABS.map(tab => (
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}
-            className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
+            className={`px-3 py-1.5 rounded-lg text-xs font-medium flex-shrink-0  transition-all ${
               activeTab === tab
                 ? 'text-white'
                 : 'text-white/40 hover:text-white/70'
